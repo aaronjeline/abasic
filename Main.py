@@ -1,7 +1,10 @@
 import Intepreter
 
-demo1 = "if test"
-demo2 = "10 if test"
+
+lines = [
+    'PRINT "hello"',
+    'IF '
+]
 
 state = Intepreter.initialize()
 Intepreter.interpret(demo1,state)

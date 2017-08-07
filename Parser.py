@@ -32,20 +32,42 @@ def parseStatement(statement):
     command = statement.pop(0)
     args = {}
     if command == 'PRINT':
-        args['EXPR-LIST'] = sum(statement)
+        args['EXPR-LIST'] = statement[0]
         return Statement(command,args)
     elif command == 'IF':
         args['EXP1'] = statement[0]
         args['RELOP'] = statement[1]
         args['EXP2'] = statement[3]
-        args['THEN'] = 'THEN'
+        args['THEN'] = statement[4]
         args['RESULT'] = parseStatement(statement[5])
         return Statement(command.args)
     elif command == 'GOTO':
         args['EXPR'] = statement[0]
         return Statement(command,args)
     elif command == 'INPUT':
-        args['VAR_LIST'] = statem
+        args['VAR_LIST'] = statement[0]
+        return Statement(command,args)
+    elif command == 'LET':
+        args['VAR'] = statement[0]
+        args['='] = statement[1]
+        args['EXPR'] = statement[2]
+        return Statement(command,args)
+    elif command == 'GOSUB':
+        args['EXPR'] = statement[0]
+        return Statement(command.args)
+    elif command == 'RETURN':
+        return Statement(command)
+    elif command == 'CLEAR':
+        return Statement(command)
+    elif command == 'LIST':
+        return Statement(command)
+    elif command == 'RUN':
+        return Statement(command)
+    elif command == 'END':
+        return Statement(command)
+    else:
+        return False
+
 
 
 
