@@ -1,5 +1,7 @@
+#!/usr/bin/python
 import Intepreter
 import Tokenizer
+import Parser
 
 
 lines = [
@@ -9,4 +11,4 @@ lines = [
 
 state = Intepreter.initialize()
 for line in lines:
-    print(Tokenizer.tokenize(line))
+    print(Parser.parse(line)))

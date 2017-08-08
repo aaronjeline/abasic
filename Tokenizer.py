@@ -23,6 +23,11 @@ class Operator():
     def __str__(self):
         return op
 
+class Seperator():
+    def __str__(self):
+        return 'SEPERATOR'
+
+
 class String():
     def __init__(self,string):
         self.string = string
@@ -40,6 +45,7 @@ class Identifier():
 digits = ('1','2','3','4','5','6','7','8','9')
 quote = '"'
 comma = ','
+bang = '!'
 whitespace = (' ', '    ')
 operators = ('+', '-','=','*','/','<','>')
 keywords = ('PRINT','IF','THEN')
@@ -83,6 +89,11 @@ def tokenize(line):
                 tokens.append(Identifier(cur))
                 cur = ""
             tokens.append(Comma())
+        elif c == comma:
+            if cur != "":
+                tokens.append(Identifier(cur))
+                cur = ""
+            tokens.append(Seperator())
         elif c in whitespace:
             if cur != "":
                 tokens.append(Identifier(cur))
