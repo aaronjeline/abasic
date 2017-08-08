@@ -1,11 +1,12 @@
 import Intepreter
+import Tokenizer
 
 
 lines = [
     'PRINT "hello"',
-    'IF '
+    'IF 5 = 5 THEN PRINT "HELLO"'
 ]
 
 state = Intepreter.initialize()
-Intepreter.interpret(demo1,state)
-Intepreter.interpret(demo2,state)
+for line in lines:
+    print(Tokenizer.tokenize(line))
