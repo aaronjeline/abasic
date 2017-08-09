@@ -73,6 +73,12 @@ def interpretRunStatement(state):
 def interpretEndStatement(state):
     state.halt = True
 
+def interpretGotoStatement(statement,state):
+    dest = interpretExpression(statement.exp,state)
+    if type(dest) != int:
+        raise Exception('Expected INT as argument to GOTO')
+    state.pc = dest
+
 
 def interpretStatement(statement, state):
     if type(statement) == statements.PrintStatement:
@@ -83,6 +89,8 @@ def interpretStatement(statement, state):
         interpretRunStatement(state)
     elif type(statement) == statements.EndStatement:
         interpretEndStatement(state)
+    elif type(statement) == statements.GotoStatement:
+        interpretGotoStatement(statement, state)
 
 
 def interpret(line, state):

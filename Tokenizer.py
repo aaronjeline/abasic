@@ -48,7 +48,7 @@ comma = ','
 bang = '!'
 whitespace = (' ', '    ')
 operators = ('+', '-','=','*','/','<','>')
-keywords = ('PRINT','IF','THEN', 'RUN','END')
+keywords = ('PRINT','IF','THEN', 'RUN','END', 'GOTO')
 
 def tokenize(line):
     tokens = []

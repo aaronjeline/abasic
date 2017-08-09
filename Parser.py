@@ -58,6 +58,10 @@ def parseIfStatement(tokens):
     new.result = parseStatement(tokens[expBound+2:])
     return new
 
+def parseGotoStatement(tokens):
+    new = Statements.GotoStatement()
+    new.exp = parseExpression(tokens[1:])
+    return new
 
 
 
@@ -72,7 +76,9 @@ def parseStatement(tokens):
     elif tokens[0].keyword == 'RUN':
         new = Statements.RunStatement()
     elif tokens[0].keyword == 'END':
-        new  = Statements.EndStatement()
+        new = Statements.EndStatement()
+    elif tokens[0].keyword == 'GOTO':
+        new = parseGotoStatement(tokens)
     else:
         raise Exception('Unknown Keyword')
     return new

@@ -14,5 +14,8 @@ class RunStatement(BaseStatment):
 class EndStatement(BaseStatment):
     pass
 
+class GotoStatement(BaseException):
+    exp = None
+
 class Statement():
     statement = None
