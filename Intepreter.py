@@ -18,8 +18,8 @@ def interpretExpression(expression):
         if type(i) == tokens.Number:
             stack.append(i.value)
         else:
-            a = stack.pop()
             b = stack.pop()
+            a = stack.pop()
             if i.op == '+':
                 stack.append(a+b)
             elif i.op == '-':

@@ -21,7 +21,7 @@ class Operator():
         self.op = op
 
     def __str__(self):
-        return op
+        return 'OPERATOR(' + self.op + ')'
 
 class Seperator():
     def __str__(self):
@@ -59,7 +59,7 @@ def tokenize(line):
         if inNumber:
             if c in digits:
                 cur += c
-        else:
+            else:
                 tokens.append(Number(int(cur)))
                 inNumber = False
                 cur = ""
@@ -96,6 +96,14 @@ def tokenize(line):
                 tokens.append(Identifier(cur))
                 cur = ""
             tokens.append(Comma())
+        elif c == bang:
+            if cur != "":
+                if inNumber:
+                    tokens.append(Number(int(cur)))
+                else:
+                    tokens.append(Identifier(cur))
+                cur = ''
+            tokens.append(Seperator())
         elif c == comma:
             if cur != "":
                 tokens.append(Identifier(cur))
