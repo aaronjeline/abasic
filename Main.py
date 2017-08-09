@@ -5,8 +5,10 @@ import Parser
 
 
 lines = [
-    'PRINT 5!5+5-4*,"hello"',
-    'IF 55= THEN PRINT "HELLO"'
+    '10 PRINT 5!5+5-4*,"hello"',
+    '20 IF 5!1+6= THEN PRINT "HELLO"',
+    '30 END',
+    'RUN'
 ]
 
 state = Intepreter.initialize()

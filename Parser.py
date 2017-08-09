@@ -45,14 +45,36 @@ def parsePrintStatement(tokens):
     new.arg = parseExprList(tokens[1:])
     return new
 
+def parseIfStatement(tokens):
+    new = Statements.IfStatement()
+    #Find the THEN keyword.
+    expBound = None
+    for token in tokens[1:]:
+        if type(token) == t.Keyword and token.keyword == 'THEN':
+            expBound = tokens[1:].index(token)
+    if expBound is None:
+        raise Exception('Expected THIS before newline')
+    new.exp = parseExpression(tokens[1:expBound+1])
+    new.result = parseStatement(tokens[expBound+2:])
+    return new
+
+
 
 
 def parseStatement(tokens):
     new = None
     if type(tokens[0]) != t.Keyword:
-        raise Exception('Invalid Keyword')
+        raise Exception('Statement Doesn\'t begin with a keyword.')
     elif tokens[0].keyword == 'PRINT':
         new = parsePrintStatement(tokens)
+    elif tokens[0].keyword == 'IF':
+        new = parseIfStatement(tokens)
+    elif tokens[0].keyword == 'RUN':
+        new = Statements.RunStatement()
+    elif tokens[0].keyword == 'END':
+        new  = Statements.EndStatement()
+    else:
+        raise Exception('Unknown Keyword')
     return new
 
 
@@ -61,7 +83,7 @@ def parseStatement(tokens):
 def parseLine(tokens):
     new = Line()
     if type(tokens[0]) == t.Number:
-        new.num = tokens.pop(0)
+        new.num = tokens.pop(0).value
     new.statement = parseStatement(tokens)
     return new
 

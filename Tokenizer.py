@@ -42,13 +42,13 @@ class Identifier():
     def __str__(self):
         return self.i
 
-digits = ('1','2','3','4','5','6','7','8','9')
+digits = ('0','1','2','3','4','5','6','7','8','9')
 quote = '"'
 comma = ','
 bang = '!'
 whitespace = (' ', '    ')
 operators = ('+', '-','=','*','/','<','>')
-keywords = ('PRINT','IF','THEN')
+keywords = ('PRINT','IF','THEN', 'RUN','END')
 
 def tokenize(line):
     tokens = []
@@ -70,13 +70,6 @@ def tokenize(line):
                 cur = ""
             else:
                 cur += c
-        elif inNumber:
-            if c in digits:
-                cur += c
-            else:
-                tokens.append(Number(int(cur)))
-                inNumber = False
-                cur = ""
         elif c in operators:
             #Clear the cur
             if cur != "":
@@ -88,7 +81,7 @@ def tokenize(line):
                 tokens.append(Identifier(cur))
                 cur = ""
             inString = True
-        elif c in digits:
+        elif c in digits and not inNumber:
             cur += c
             inNumber = True
         elif c == comma:
@@ -113,7 +106,7 @@ def tokenize(line):
             if cur != "":
                 tokens.append(Identifier(cur))
                 cur = ""
-        else:
+        elif not inNumber:
             #It's a character
             cur += c
             if cur in keywords:
