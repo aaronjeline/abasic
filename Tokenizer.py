@@ -56,6 +56,13 @@ def tokenize(line):
     inString = False
     inNumber = False
     for c in line:
+        if inNumber:
+            if c in digits:
+                cur += c
+        else:
+                tokens.append(Number(int(cur)))
+                inNumber = False
+                cur = ""
         if inString:
             if c == quote:
                 inString = False
@@ -104,6 +111,11 @@ def tokenize(line):
             if cur in keywords:
                 tokens.append(Keyword(cur))
                 cur = ""
+    if cur!= '':
+        if inNumber:
+            tokens.append(Number(int(cur)))
+        else:
+            raise Exception('Invalid Line Ending!')
 
     return tokens
 

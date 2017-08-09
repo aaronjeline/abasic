@@ -1,6 +1,6 @@
 import Parser
 import Statements as statements
-import Tokenzier as tokens
+import Tokenizer as tokens
 
 class State():
     def __init__(self):
@@ -14,9 +14,9 @@ def initialize():
 
 def interpretExpression(expression):
     stack = []
-    for i in expression:
-        if type(i) == t.Number:
-            stack.append(i)
+    for i in expression.contents:
+        if type(i) == tokens.Number:
+            stack.append(i.value)
         else:
             a = stack.pop()
             b = stack.pop()
@@ -35,7 +35,7 @@ def interpretExpression(expression):
             elif i.op == '>':
                 stack.append(a>b)
     if len(stack) > 1:
-        throw Error()
+        raise Exception('Non singular stack left over!')
     return stack[0]
 
 
@@ -43,9 +43,10 @@ def interpretPrintStatement(statement):
     total = ""
     for i in statement.arg.contents:
         if type(i) == tokens.String:
-            total += String.string
-        elif:
+            total += i.string
+        else:
             total += str(interpretExpression(i))
+    print(total)
 
 
 def interpretStatement(statement):
@@ -55,4 +56,4 @@ def interpretStatement(statement):
 
 def interpret(line, state):
     objects = Parser.parse(line)
-    interpretStatement(objects[0])
+    interpretStatement(objects.statement)

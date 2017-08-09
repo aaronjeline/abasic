@@ -5,10 +5,10 @@ import Parser
 
 
 lines = [
-    'PRINT "hello"',
+    'PRINT 5+5',
     'IF 5 = 5 THEN PRINT "HELLO"'
 ]
 
 state = Intepreter.initialize()
 for line in lines:
-    print(Parser.parse(line)))
+    Intepreter.interpret(line, state)

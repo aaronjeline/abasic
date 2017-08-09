@@ -1,5 +1,6 @@
 import Tokenizer as t
-from t import tokenize
+from Tokenizer import tokenize
+import Statements
 
 class Line():
     statement = None
@@ -33,23 +34,26 @@ def parseExprList(tokens):
                 cur = []
         else:
             cur.append(token)
+    if cur != []:
+        new.contents.append(parseExpression(cur))
     return new
 
 def parsePrintStatement(tokens):
     #first token is keyword
     #Rest is an expr-list
-    new = PrintStatement()
+    new = Statements.PrintStatement()
     new.arg = parseExprList(tokens[1:])
     return new
 
 
 
 def parseStatement(tokens):
-    new = Statement()
+    new = None
     if type(tokens[0]) != t.Keyword:
-        throw Error
+        raise Exception('Invalid Keyword')
     elif tokens[0].keyword == 'PRINT':
-        Statement.statment = parsePrintStatement(tokens)
+        new = parsePrintStatement(tokens)
+    return new
 
 
 
@@ -65,4 +69,4 @@ def parseLine(tokens):
 
 def parse(line):
     tokens = tokenize(line)
-    parseLine(tokens)
+    return parseLine(tokens)

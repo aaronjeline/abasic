@@ -1,7 +1,7 @@
 class BaseStatment():
     pass
 
-class PrintStatment(BaseStatment):
+class PrintStatement(BaseStatment):
     arg = None
 
 class IfStatement(BaseStatment):
