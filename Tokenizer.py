@@ -48,7 +48,8 @@ comma = ','
 bang = '!'
 whitespace = (' ', '    ')
 operators = ('+', '-','=','*','/','<','>')
-keywords = ('PRINT','IF','THEN', 'RUN','END', 'GOTO')
+keywords = ('PRINT','IF','THEN', 'RUN','END', 'GOTO', 'LET')
+chars = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
 
 def tokenize(line):
     tokens = []
@@ -115,6 +116,8 @@ def tokenize(line):
     if cur!= '':
         if inNumber:
             tokens.append(Number(int(cur)))
+        elif all(map(lambda x: x in chars, cur)):
+            tokens.append(Identifier(cur))
         else:
             raise Exception('Invalid Line Ending!')
 

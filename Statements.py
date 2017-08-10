@@ -17,5 +17,9 @@ class EndStatement(BaseStatment):
 class GotoStatement(BaseException):
     exp = None
 
+class LetStatement():
+    var = None
+    val = None
+
 class Statement():
     statement = None

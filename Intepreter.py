@@ -19,6 +19,11 @@ def interpretExpression(expression, state):
     for i in expression.contents:
         if type(i) == tokens.Number:
             stack.append(i.value)
+        elif type(i) == tokens.Identifier:
+            try:
+                stack.append(state.variables[i.i])
+            except KeyError:
+                print('Undefined Variable: ' + i.i)
         else:
             b = stack.pop()
             a = stack.pop()
@@ -79,6 +84,11 @@ def interpretGotoStatement(statement,state):
         raise Exception('Expected INT as argument to GOTO')
     state.pc = dest
 
+def interpretLetStatement(statement,state):
+    result = interpretExpression(statement.val, state)
+    state.variables[statement.var] = result
+
+
 
 def interpretStatement(statement, state):
     if type(statement) == statements.PrintStatement:
@@ -91,6 +101,8 @@ def interpretStatement(statement, state):
         interpretEndStatement(state)
     elif type(statement) == statements.GotoStatement:
         interpretGotoStatement(statement, state)
+    elif type(statement) == statements.LetStatement:
+        interpretLetStatement(statement, state)
 
 
 def interpret(line, state):

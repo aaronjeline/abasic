@@ -63,6 +63,17 @@ def parseGotoStatement(tokens):
     new.exp = parseExpression(tokens[1:])
     return new
 
+def parseLetStatement(tokens):
+    new = Statements.LetStatement()
+    if type(tokens[1]) == t.Identifier:
+        new.var = tokens[1].i
+    else:
+        raise Exception('Expected Identifier as 2nd token in LET statement')
+    if type(tokens[2]) != t.Operator and tokens[2].op != '=':
+        raise Exception('Expected "=" before expression in LET statement')
+    new.val = parseExpression(tokens[3:])
+    return new
+
 
 
 def parseStatement(tokens):
@@ -79,6 +90,8 @@ def parseStatement(tokens):
         new = Statements.EndStatement()
     elif tokens[0].keyword == 'GOTO':
         new = parseGotoStatement(tokens)
+    elif tokens[0].keyword == 'LET':
+        new = parseLetStatement(tokens)
     else:
         raise Exception('Unknown Keyword')
     return new
