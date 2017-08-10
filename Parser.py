@@ -74,7 +74,10 @@ def parseLetStatement(tokens):
     new.val = parseExpression(tokens[3:])
     return new
 
-
+def parseGoSubStatement(tokens):
+    new = Statements.GoSubStatement()
+    new.dest = parseExpression(tokens[1:])
+    return new
 
 def parseStatement(tokens):
     new = None
@@ -92,6 +95,10 @@ def parseStatement(tokens):
         new = parseGotoStatement(tokens)
     elif tokens[0].keyword == 'LET':
         new = parseLetStatement(tokens)
+    elif tokens[0].keyword == 'GOSUB':
+        new = parseGoSubStatement(tokens)
+    elif tokens[0].keyword == 'RETURN':
+        new = Statements.ReturnStatement()
     else:
         raise Exception('Unknown Keyword')
     return new

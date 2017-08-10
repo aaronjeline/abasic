@@ -62,6 +62,7 @@ def interpretIfStatement(statement, state):
 
 def interpretRunStatement(state):
     state.halt = False
+    state.pc = 0
     try:
         while not state.halt:
             cur = state.pc
@@ -83,11 +84,24 @@ def interpretGotoStatement(statement,state):
     if type(dest) != int:
         raise Exception('Expected INT as argument to GOTO')
     state.pc = dest
+    state.halt = False
 
 def interpretLetStatement(statement,state):
     result = interpretExpression(statement.val, state)
     state.variables[statement.var] = result
 
+def interpretGoSubStatement(statement,state):
+    state.stack.append(state.pc)
+    dest = interpretExpression(statement.dest, state)
+    state.pc = dest
+    state.halt = False
+
+def interpretReturnStatement(statement,state):
+    try:
+        state.pc = state.stack.pop()
+    except IndexError:
+        print("Warning! Returning from empty call stack!")
+        state.halt = True
 
 
 def interpretStatement(statement, state):
@@ -103,6 +117,11 @@ def interpretStatement(statement, state):
         interpretGotoStatement(statement, state)
     elif type(statement) == statements.LetStatement:
         interpretLetStatement(statement, state)
+    elif type(statement) == statements.GoSubStatement:
+        interpretGoSubStatement(statement,state)
+    elif type(statement) == statements.ReturnStatement:
+        interpretReturnStatement(statement,state)
+
 
 
 def interpret(line, state):

@@ -21,5 +21,11 @@ class LetStatement():
     var = None
     val = None
 
+class GoSubStatement():
+    dest = None
+
+class ReturnStatement():
+    pass
+
 class Statement():
     statement = None

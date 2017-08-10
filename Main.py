@@ -5,8 +5,13 @@ import Parser
 
 
 lines = [
-    'LET x = 5!5+',
-    'PRINT x'
+    '1 PRINT "START"',
+    '2 GOSUB 5',
+    '3 PRINT "AFTER_SUB"',
+    '4 END',
+    '5 PRINT "SUB"',
+    '6 RETURN',
+    'RUN'
 ]
 
 state = Intepreter.initialize()
